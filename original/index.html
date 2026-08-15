@@ -13,6 +13,44 @@
 	<link rel="shortcut icon" type="image/png" href="./favicon.png">
 	
 	
+	<!-- Combined-mode runtime fetch wrapper: when fnf_combined_mode=="1" this will merge ./combined/songs-data.json into any JSON song lists the game requests -->
+	<script>
+	(function(){
+		try{
+			var combinedFlag = false;
+			try{ combinedFlag = localStorage.getItem('fnf_combined_mode') === '1'; }catch(e){}
+			if(!combinedFlag) return;
+			// preload combined data
+			var combinedPromise = fetch('./combined/songs-data.json').then(function(r){ return r.json(); }).catch(function(){ return []; });
+			var realFetch = window.fetch.bind(window);
+			window.fetch = function(input, init){
+				return realFetch(input, init).then(function(response){
+					try{
+						var ct = (response.headers && response.headers.get) ? (response.headers.get('content-type') || '') : '';
+						if(ct.indexOf('application/json') !== -1){
+							return response.clone().json().then(function(data){
+								return combinedPromise.then(function(extra){
+									if(Array.isArray(data)){
+										var merged = data.concat(extra || []);
+										return new Response(JSON.stringify(merged), {status:200, headers: {'Content-Type':'application/json'}});
+									} else if(data && Array.isArray(data.songs)){
+										data.songs = data.songs.concat(extra || []);
+										return new Response(JSON.stringify(data), {status:200, headers: {'Content-Type':'application/json'}});
+									} else {
+										// fallback: attempt to append if top-level is object with array values
+										return response;
+									}
+							});
+						});
+						}
+					}catch(e){/* ignore and return original response */}
+					return response;
+				});
+			};
+		}catch(err){/* ignore */}
+	})();
+	</script>
+	
 	<script type="text/javascript" src="./ShaggyMod.js"></script>
 	
 	<script>
@@ -75,13 +113,13 @@
 		lime.embed ("ShaggyMod", "openfl-content", 1280, 720, { parameters: {} });
 	</script>
 
-<!-- Auto-redirect helper: if a Story/Download button in the mod mentions "shaggy x matt" or "press to download", clicking it will open the Shaggy x Matt mod in ./mods/ -->
+<!-- Auto-redirect helper: if a Story/Download button in the mod mentions "shaggy x matt" or "press to download", clicking it will open the Shaggy x Matt mod in the same tab -->
 <script>
 (function(){
   function shouldRedirectText(t){
     if(!t) return false;
     t = t.toLowerCase();
-    return t.includes('shaggy x matt') || t.includes('shaggy x matt') || t.includes('press to download') || (t.includes('download') && t.includes('shaggy'));
+    return t.includes('shaggy x matt') || t.includes('press to download') || (t.includes('download') && t.includes('shaggy'));
   }
 
   document.addEventListener('click', function(e){
@@ -90,8 +128,8 @@
       while(el && el !== document){
         var txt = (el.textContent || '').trim();
         if(shouldRedirectText(txt)){
-          // open Shaggy x Matt mod in a new tab to avoid losing progress
-          window.open('./mods/','_blank');
+          // open Shaggy x Matt mod in the same tab
+          window.location.href = './mods/shaggyxmatt';
           e.preventDefault();
           return;
         }
