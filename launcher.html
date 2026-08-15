@@ -17,9 +17,9 @@
     .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:36px}
     h1{margin:0;font-size:34px;letter-spacing:1px;text-transform:uppercase;color:var(--neon-blue);text-shadow:0 0 10px rgba(0,230,255,0.12),0 0 30px rgba(0,230,255,0.08)}
     .subtitle{color:#b8c7d6;opacity:.85;margin-top:6px;font-size:14px;text-align:center}
-    .panel{display:flex;gap:20px;padding:22px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 8px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .panel{display:flex;gap:20px;padding:22px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 8px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03);flex-wrap:wrap;justify-content:center}
 
-    .mod{display:flex;align-items:center;gap:14px;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));min-width:300px}
+    .mod{display:flex;align-items:center;gap:14px;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));min-width:260px}
     .mod img{width:96px;height:auto;border-radius:8px;filter:drop-shadow(0 10px 30px rgba(0,0,0,0.6));}
     .mod .col{display:flex;flex-direction:column;gap:8px}
     .title{font-weight:800;font-size:18px;color:#fff;letter-spacing:.6px}
@@ -28,14 +28,16 @@
     .open-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:transparent;border:2px solid transparent;color:#fff;font-weight:800;cursor:pointer;text-decoration:none}
     .open-btn.neon-green{background:linear-gradient(90deg, rgba(0,255,136,0.06), rgba(0,255,136,0.03));border-color:rgba(0,255,136,0.22);box-shadow:0 6px 24px rgba(0,255,136,0.08),0 0 20px rgba(0,255,136,0.06)}
     .open-btn.neon-red{background:linear-gradient(90deg, rgba(255,68,68,0.06), rgba(255,68,68,0.02));border-color:rgba(255,68,68,0.22);box-shadow:0 6px 24px rgba(255,68,68,0.08),0 0 20px rgba(255,68,68,0.06)}
+    .open-btn.neon-purple{background:linear-gradient(90deg, rgba(180,102,255,0.06), rgba(180,102,255,0.03));border-color:rgba(180,102,255,0.22);box-shadow:0 6px 24px rgba(180,102,255,0.08),0 0 20px rgba(180,102,255,0.06)}
     .open-btn svg{filter:drop-shadow(0 6px 18px rgba(0,0,0,0.5))}
 
-    .glow{position:relative}
-    .glow:after{content:"";position:absolute;inset:-8px;border-radius:14px;background:radial-gradient(closest-side, rgba(0,230,255,0.12), transparent 40%);z-index:-1;filter:blur(18px);opacity:0.9}
+    .combined-avatars{display:flex;gap:8px;align-items:center}
+    .combined-avatars img{width:56px;height:auto;border-radius:8px;border:2px solid rgba(255,255,255,0.03)}
 
     @media (max-width:720px){
-      .panel{flex-direction:column}
+      .panel{flex-direction:column;gap:12px}
       .mod img{width:84px}
+      .combined-avatars img{width:54px}
     }
 
     footer{position:fixed;bottom:12px;left:0;right:0;text-align:center;font-size:12px;opacity:.6}
@@ -68,16 +70,32 @@
         <img src="./assets/red-shaggy.png" alt="Red Shaggy" onerror="this.style.display='none'">
         <div class="col">
           <div class="title">Shaggy x Matt Mod</div>
-          <div class="desc">Loads the Shaggy x Matt mod from the mods/ folder. Make sure the mods/ folder exists and has an index or entry file.</div>
+          <div class="desc">Loads the Shaggy x Matt mod from the mods/ folder. The mods/ folder should contain an index.html (and Funkin.js) to run.</div>
           <a class="open-btn neon-red" id="open-xmatt" href="./mods/">
             <span>Play Shaggy x Matt</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7L8 5z" fill="white"/></svg>
           </a>
         </div>
       </div>
+
+      <div class="mod">
+        <div class="combined-avatars">
+          <img src="./assets/red-shaggy.png" alt="Red Shaggy" onerror="this.style.display='none'">
+          <img src="./assets/green-shaggy.png" alt="Green Shaggy" onerror="this.style.display='none'">
+        </div>
+        <div class="col">
+          <div class="title">Combined Mod — All Songs (Freeplay)</div>
+          <div class="desc">Opens the combined mod where songs from both mods are merged into the Freeplay menu. Place your combined mod files (index.html, Funkin.js, and song/data folders) into <code>combined/</code> (or tell me the exact folder and I'll point the button there).</div>
+          <a class="open-btn neon-purple" href="./combined/">
+            <span>Open Combined Freeplay</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 3v18l15-9L5 3z" fill="white"/></svg>
+          </a>
+        </div>
+      </div>
+
     </div>
 
-    <div class="desc" style="max-width:740px;text-align:center;margin-top:6px;opacity:.9">If you don't see the Shaggy images, add them to <code>assets/green-shaggy.png</code> and <code>assets/red-shaggy.png</code>. If you'd like I can add those image files for you — upload them or tell me to use the two images you provided and I'll add them into the repo.</div>
+    <div class="desc" style="max-width:840px;text-align:center;margin-top:6px;opacity:.9">If you don't see the Shaggy images, add them to <code>assets/green-shaggy.png</code> and <code>assets/red-shaggy.png</code>. If you'd like I can add the two images you uploaded (Image 3 = red, Image 4 = green) into the repo and also create the <code>combined/</code> folder with a starter index if you'd like.</div>
   </div>
 
   <footer>Launcher created for Romantails9YT · FNF-VS-ShaggyV2.5</footer>
