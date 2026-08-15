@@ -1,12 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>Redirecting...</title>
-	<meta http-equiv="refresh" content="0;url=./original/index.html">
-	<script>window.location.href = './original/index.html';</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FNF VS Shaggy - Launcher</title>
+  <style>
+    :root{
+      --panel:#0f0f17;
+      --neon-green:#00ff88;
+      --neon-red:#ff4d4d;
+      --neon-purple:#b466ff;
+    }
+    html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif;color:#fff}
+    body{
+      background: url('./assets/istock.jpg') center/cover no-repeat, linear-gradient(135deg,#191970 0%, #06152b 100%);
+      display:flex;align-items:center;justify-content:center;padding:36px;
+    }
+    .wrap{width:100%;max-width:1100px;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);border-radius:16px;padding:28px;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+    h1{margin:0;font-size:34px;color:#00e6ff;text-align:center}
+    .subtitle{color:#cbd8e6;opacity:.9;text-align:center;margin:8px 0 18px}
+    .panel{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
+    .mod{display:flex;align-items:center;gap:14px;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));min-width:260px}
+    .mod img{width:96px;height:auto;border-radius:8px;object-fit:cover}
+    .col{display:flex;flex-direction:column;gap:8px}
+    .title{font-weight:800;font-size:18px}
+    .desc{font-size:12.5px;color:#cbd8e6;opacity:.9}
+    .open-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:transparent;border:2px solid transparent;color:#fff;font-weight:800;cursor:pointer;text-decoration:none}
+    .open-btn.neon-green{background:linear-gradient(90deg, rgba(0,255,136,0.06), rgba(0,255,136,0.03));border-color:rgba(0,255,136,0.22)}
+    .open-btn.neon-red{background:linear-gradient(90deg, rgba(255,68,68,0.06), rgba(255,68,68,0.02));border-color:rgba(255,68,68,0.22)}
+    .open-btn.neon-purple{background:linear-gradient(90deg, rgba(180,102,255,0.06), rgba(180,102,255,0.03));border-color:rgba(180,102,255,0.22)}
+    footer{margin-top:18px;text-align:center;font-size:12px;opacity:.8}
+    @media (max-width:720px){.mod img{width:84px}.panel{flex-direction:column;align-items:center}}
+  </style>
 </head>
 <body>
-	If you are not redirected automatically, follow this <a href="./original/index.html">link to the original game</a>.
+  <div class="wrap">
+    <h1>FNF VS Shaggy</h1>
+    <div class="subtitle">Launcher — click a button to load a mod. Nothing will auto-run.</div>
+
+    <div class="panel">
+
+      <div class="mod">
+        <img src="./assets/green-shaggy.png" alt="Green Shaggy" onerror="this.style.display='none'">
+        <div class="col">
+          <div class="title">Original Shaggy Mod</div>
+          <div class="desc">Opens the original Shaggy mod from the original/ folder. The game will only load when you click Play.</div>
+          <a class="open-btn neon-green" id="play-original" href="#" onclick="event.preventDefault(); window.location.href='./original/index.html';">
+            <span>Play Original</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="mod">
+        <img src="./assets/red-shaggy.png" alt="Red Shaggy" onerror="this.style.display='none'">
+        <div class="col">
+          <div class="title">Shaggy x Matt Mod</div>
+          <div class="desc">Loads the Shaggy x Matt mod from the mods/ folder. Click to open it.</div>
+          <a class="open-btn neon-red" id="play-xmatt" href="#" onclick="event.preventDefault(); window.location.href='./mods/shaggyxmatt/';">
+            <span>Play Shaggy x Matt</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div style="display:flex;gap:8px;align-items:center">
+          <img src="./assets/red-shaggy.png" alt="Red" onerror="this.style.display='none'" style="width:56px">
+          <img src="./assets/green-shaggy.png" alt="Green" onerror="this.style.display='none'" style="width:56px">
+        </div>
+        <div class="col">
+          <div class="title">Combined Mode — All Songs</div>
+          <div class="desc">When you click LINK, the launcher will tell the original game to include extra songs (from combined/). Click to enable and open the base game.</div>
+          <a class="open-btn neon-purple" id="open-combined" href="#" onclick="event.preventDefault(); localStorage.setItem('fnf_combined_mode','1'); window.location.href='./original/index.html';">
+            <span>LINK (Enable Combined & Open Original)</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>Launcher created for Romantails9YT · FNF-VS-ShaggyV2.5</footer>
+  </div>
 </body>
 </html>
